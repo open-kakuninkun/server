@@ -1,9 +1,17 @@
 <?php
 require_once 'vendor/autoload.php';
+if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    if(strpos($ipaddress, ',') != false) {
+    $ip_list = explode(',', $ipaddress);
+    $ipaddress = $ip_list[0];
+    }
+} else {
+    $ipaddress = $_SERVER['REMOTE_ADDR'];
+}
 $environment = [
-    "ip" => $_SERVER['HTTP_X_FORWARDED_FOR'],
-    "gateway_name" => gethostbyaddr($_SERVER['HTTP_X_FORWARDED_FOR']),
-    "request_method" => $_SERVER['REQUEST_METHOD']
+    "ip" => $ipaddress,
+    "gateway_name" => gethostbyaddr($ipaddress)
 ];
 echo json_encode($environment);
 ?>
