@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: https://open-kakuninkun.github.io');
 require_once 'vendor/autoload.php';
 if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
